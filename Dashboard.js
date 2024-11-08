@@ -4,12 +4,22 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Dashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false); // Dark/Light mode state
-
+  const [gameStats, setGameStats] = useState({
+    level: 42,
+    rank: "Diamond",
+    winRate: "68%",
+    matchesPlayed: 1337
+  });
 
   const dynamicStyles = isDarkMode ? darkStyles : lightStyles;
 
   return (
     <View style={[styles.container, dynamicStyles.container]}>
+      {/* Add Level Badge above Profile Image */}
+      <View style={styles.levelBadge}>
+        <Text style={styles.levelText}>LVL {gameStats.level}</Text>
+      </View>
+
       {/* Profile Card Section */}
       <View style={[styles.profileCard, dynamicStyles.profileCard]}>
         <Image
@@ -39,6 +49,28 @@ const Dashboard = () => {
             <Ionicons name="person-add-outline" size={24} color={isDarkMode ? '#bbb' : '#777'} />
             <Text style={[styles.socialText, dynamicStyles.socialText]}>100K</Text>
             <Text style={[styles.socialLabel, dynamicStyles.socialLabel]}>Following</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Add Gaming Stats Section */}
+      <View style={[styles.statsCard, dynamicStyles.profileCard]}>
+        <Text style={[styles.statsTitle, dynamicStyles.userName]}>Gaming Stats</Text>
+        <View style={styles.statsGrid}>
+          <View style={styles.statItem}>
+            <Ionicons name="trophy-outline" size={24} color={isDarkMode ? '#bbb' : '#777'} />
+            <Text style={[styles.statValue, dynamicStyles.socialText]}>{gameStats.rank}</Text>
+            <Text style={[styles.statLabel, dynamicStyles.socialLabel]}>Rank</Text>
+          </View>
+          <View style={styles.statItem}>
+            <Ionicons name="stats-chart-outline" size={24} color={isDarkMode ? '#bbb' : '#777'} />
+            <Text style={[styles.statValue, dynamicStyles.socialText]}>{gameStats.winRate}</Text>
+            <Text style={[styles.statLabel, dynamicStyles.socialLabel]}>Win Rate</Text>
+          </View>
+          <View style={styles.statItem}>
+            <Ionicons name="game-controller-outline" size={24} color={isDarkMode ? '#bbb' : '#777'} />
+            <Text style={[styles.statValue, dynamicStyles.socialText]}>{gameStats.matchesPlayed}</Text>
+            <Text style={[styles.statLabel, dynamicStyles.socialLabel]}>Matches</Text>
           </View>
         </View>
       </View>
@@ -163,74 +195,152 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
   },
+  levelBadge: {
+    position: 'absolute',
+    top: 40,
+    backgroundColor: '#DDD04F', // Minecraft gold color
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 0, // Square edges like Minecraft
+    zIndex: 1,
+    borderColor: '#8B8B27', // Darker gold border
+    borderWidth: 3,
+  },
+  levelText: {
+    color: '#5C4033', // Brown text
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  statsCard: {
+    width: '90%',
+    padding: 15,
+    borderRadius: 0, // Square edges
+    marginBottom: 20,
+    borderWidth: 3,
+  },
+  statsTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  statsGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  statItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  statValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+  statLabel: {
+    fontSize: 12,
+    marginTop: 2,
+  },
+  xpBar: {
+    height: 10,
+    backgroundColor: '#1B5E20', // Dark green
+    borderWidth: 2,
+    borderColor: '#2E7D32', // Lighter green border
+    width: '90%',
+    marginTop: 10,
+  },
 });
 
 // Light Mode Styles
 const lightStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#f0f4f8',
+    backgroundColor: '#7CB6B6', // Minecraft sky blue
   },
   profileCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#C6C6C6', // Light stone color
+    borderColor: '#565656', // Dark stone border
+    borderWidth: 3,
   },
   userName: {
-    color: '#333',
+    color: '#2F4F4F', // Dark green-gray (like Minecraft text)
   },
   joinDate: {
-    color: '#777',
+    color: '#404040',
   },
   statusText: {
-    color: '#333',
+    color: '#2F4F4F',
   },
   infoText: {
-    color: '#777',
+    color: '#404040',
   },
   socialText: {
-    color: '#333',
+    color: '#4A7A25', // Minecraft green
   },
   socialLabel: {
-    color: '#777',
+    color: '#404040',
   },
   actionButton: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#7A7A7A', // Stone button color
+    borderColor: '#565656',
+    borderWidth: 2,
   },
   actionText: {
-    color: '#333',
+    color: '#FFFFFF',
   },
 });
 
 // Dark Mode Styles
 const darkStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#1c1c1e',
+    backgroundColor: '#1D1D1D', // Minecraft night
   },
   profileCard: {
-    backgroundColor: '#2c2c2e',
+    backgroundColor: '#565656', // Dark stone color
+    borderColor: '#7A7A7A', // Light stone border
+    borderWidth: 3,
   },
   userName: {
-    color: '#fff',
+    color: '#55FF55', // Minecraft bright green
   },
   joinDate: {
-    color: '#bbb',
+    color: '#ABABAB',
   },
   statusText: {
-    color: '#fff',
+    color: '#55FF55',
   },
   infoText: {
-    color: '#bbb',
+    color: '#ABABAB',
   },
   socialText: {
-    color: '#fff',
+    color: '#55FF55',
   },
   socialLabel: {
-    color: '#bbb',
+    color: '#ABABAB',
   },
   actionButton: {
-    backgroundColor: '#3a3a3c',
+    backgroundColor: '#454545', // Darker stone
+    borderColor: '#7A7A7A',
+    borderWidth: 2,
   },
   actionText: {
-    color: '#fff',
+    color: '#55FF55',
   },
 });
+
+// Optional: Add these Minecraft-specific colors for use throughout the app
+const minecraftColors = {
+  dirt: '#866043',
+  grass: '#4A7A25',
+  stone: '#7A7A7A',
+  wood: '#725F48',
+  leaves: '#4A7A25',
+  gold: '#DDD04F',
+  diamond: '#55FFFF',
+  emerald: '#55FF55',
+  redstone: '#FF5555',
+  obsidian: '#1D1D1D',
+  water: '#2389DA',
+};
 
 export default Dashboard;
